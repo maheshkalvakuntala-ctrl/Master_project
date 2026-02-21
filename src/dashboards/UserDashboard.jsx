@@ -59,15 +59,15 @@ const FeaturedProducts = ({ products, onAddToCart }) => {
 
   return (
     <div className="mb-8 animate-fade-in-up">
-      <div className="w-full bg-slate-900/40 border border-slate-800 rounded-2xl p-4 md:p-6 backdrop-blur-md shadow-xl relative overflow-hidden">
+      <div className="w-full bg-gradient-to-br from-slate-900/50 to-slate-950/40 border border-slate-800/60 rounded-2xl p-4 md:p-6 backdrop-blur-lg shadow-2xl relative overflow-hidden transition-transform transform hover:scale-[1.01]">
         <div className="flex justify-between items-center mb-4">
           <h3 className="text-lg font-bold text-white flex items-center gap-2"><Package size={20} className="text-violet-500"/> Best Selling</h3>
           <span className="text-xs text-slate-500 flex items-center gap-1">Swipe <ChevronRight size={12}/></span>
         </div>
         
-        <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-violet-900/50 scrollbar-track-slate-900/0">
+        <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-thin scrollbar-thumb-cyan-600/40 scrollbar-track-transparent smooth-scroll">
           {products.slice(0, 15).map((prod) => (
-            <div key={prod.product_id} className="min-w-[160px] max-w-[160px] md:min-w-[240px] md:max-w-[240px] bg-slate-950/80 border border-slate-800 rounded-xl p-3 hover:border-violet-500/50 transition-all group hover:scale-[1.02] shadow-lg flex flex-col justify-between">
+            <div key={prod.product_id} className="min-w-[160px] max-w-[160px] md:min-w-[240px] md:max-w-[240px] bg-slate-900/60 border border-slate-800 rounded-2xl p-3 hover:border-violet-500/40 transition-all group hover:scale-105 hover:shadow-2xl shadow-lg flex flex-col justify-between backdrop-blur-sm">
               <div>
                 <div className="h-28 md:h-40 bg-slate-900 rounded-lg mb-3 overflow-hidden relative">
                   <img src={prod.image_url} alt={prod.product_name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"/>
@@ -81,7 +81,7 @@ const FeaturedProducts = ({ products, onAddToCart }) => {
                     <span className="text-[10px] text-slate-400">({prod.product_rating})</span>
                 </div>
               </div>
-              <button onClick={() => onAddToCart(prod)} className="w-full bg-violet-600 hover:bg-violet-500 text-white py-2 rounded-lg text-xs md:text-sm font-bold flex items-center justify-center gap-2 transition-colors">
+              <button onClick={() => onAddToCart(prod)} className="w-full bg-gradient-to-r from-violet-600 to-cyan-500 hover:from-violet-500 hover:to-cyan-400 text-white py-2 rounded-xl text-xs md:text-sm font-bold flex items-center justify-center gap-2 transition transform hover:scale-[1.02] shadow-md hover:shadow-cyan-600/20">
                 <ShoppingCart size={14} /> Add
               </button>
             </div>
@@ -127,17 +127,17 @@ const OverviewTab = ({ orders, displayData, filters, setFilters, availableMonths
     return (
       <div className="animate-fade-in-up">
         {/* FILTERS */}
-        <div className="bg-slate-900/50 border border-slate-800 p-4 rounded-2xl mb-8 backdrop-blur-sm shadow-lg flex flex-col gap-3">
-            <div className="flex items-center gap-2 text-violet-400 font-bold uppercase text-xs tracking-widest border-b border-slate-800/50 pb-2 mb-1">
+        <div className="bg-gradient-to-r from-slate-900/40 to-slate-950/30 border border-slate-800/50 p-4 rounded-2xl mb-8 backdrop-blur-md shadow-xl flex flex-col gap-3">
+            <div className="flex items-center gap-2 text-violet-300 font-semibold uppercase text-xs tracking-widest border-b border-slate-800/40 pb-2 mb-1">
               <Filter size={14}/> Data Filters
             </div>
             
-            <div className="flex overflow-x-auto pb-2 gap-3 w-full scrollbar-hide md:grid md:grid-cols-3 md:overflow-visible md:pb-0">
+            <div className="flex overflow-x-auto pb-2 gap-3 w-full scrollbar-thin scrollbar-thumb-cyan-600/30 md:grid md:grid-cols-3 md:overflow-visible md:pb-0">
                <div className="min-w-[130px] flex-1 md:min-w-0">
                   <label className="text-xs text-slate-500 mb-1 block ml-1">Year</label>
                   <div className="relative">
                     <Calendar size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"/>
-                    <select value={filters.year} onChange={(e) => setFilters({...filters, year: e.target.value})} className="w-full pl-9 pr-8 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-sm text-white outline-none focus:ring-1 focus:ring-violet-500 hover:bg-slate-700/80 transition-colors cursor-pointer appearance-none">
+                    <select value={filters.year} onChange={(e) => setFilters({...filters, year: e.target.value})} className="w-full pl-9 pr-8 py-2.5 bg-transparent border border-slate-800/50 rounded-xl text-sm text-white outline-none focus:ring-2 focus:ring-cyan-400/30 hover:bg-slate-800/30 transition-all cursor-pointer appearance-none">
                       <option value="All">All Years</option>{yearsList.map(y => <option key={y} value={y}>{y}</option>)}
                     </select>
                   </div>
@@ -146,7 +146,7 @@ const OverviewTab = ({ orders, displayData, filters, setFilters, availableMonths
                   <label className="text-xs text-slate-500 mb-1 block ml-1">Month</label>
                   <div className="relative">
                     <Calendar size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"/>
-                    <select value={filters.month} onChange={(e) => setFilters({...filters, month: e.target.value})} className="w-full pl-9 pr-8 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-sm text-white outline-none focus:ring-1 focus:ring-violet-500 hover:bg-slate-700/80 transition-colors cursor-pointer appearance-none">
+                    <select value={filters.month} onChange={(e) => setFilters({...filters, month: e.target.value})} className="w-full pl-9 pr-8 py-2.5 bg-transparent border border-slate-800/50 rounded-xl text-sm text-white outline-none focus:ring-2 focus:ring-cyan-400/30 hover:bg-slate-800/30 transition-all cursor-pointer appearance-none">
                       <option value="All">All Months</option>{availableMonths.map(m => <option key={m} value={m}>{m}</option>)}
                     </select>
                   </div>
@@ -155,7 +155,7 @@ const OverviewTab = ({ orders, displayData, filters, setFilters, availableMonths
                   <label className="text-xs text-slate-500 mb-1 block ml-1">Category</label>
                   <div className="relative">
                     <Package size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none"/>
-                    <select value={filters.category} onChange={(e) => setFilters({...filters, category: e.target.value})} className="w-full pl-9 pr-8 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-sm text-white outline-none focus:ring-1 focus:ring-violet-500 hover:bg-slate-700/80 transition-colors cursor-pointer appearance-none">
+                    <select value={filters.category} onChange={(e) => setFilters({...filters, category: e.target.value})} className="w-full pl-9 pr-8 py-2.5 bg-transparent border border-slate-800/50 rounded-xl text-sm text-white outline-none focus:ring-2 focus:ring-cyan-400/30 hover:bg-slate-800/30 transition-all cursor-pointer appearance-none">
                       {availableCategories.map(c => <option key={c} value={c}>{c}</option>)}
                     </select>
                   </div>
@@ -164,7 +164,7 @@ const OverviewTab = ({ orders, displayData, filters, setFilters, availableMonths
         </div>
   
         {/* KPI Cards */}
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 md:gap-4 mb-8">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6 mb-8">
             {[
               { title: 'Orders', value: orders.length, icon: Package, color: 'text-violet-400', bg: 'bg-violet-500/10' },
               { title: 'Spend', value: formatRupees(kpiTotalSpend), icon: DollarSign, color: 'text-cyan-400', bg: 'bg-cyan-500/10' },
@@ -172,8 +172,8 @@ const OverviewTab = ({ orders, displayData, filters, setFilters, availableMonths
               { title: 'Active', value: orders.filter(o => ['Pending', 'Processing', 'Shipped'].includes(o.order_status)).length, icon: TrendingUp, color: 'text-amber-400', bg: 'bg-amber-500/10' },
               { title: 'Delivered', value: orders.filter(o => o.order_status === 'Delivered').length, icon: CheckCircle, color: 'text-emerald-400', bg: 'bg-emerald-500/10' },
             ].map((kpi, idx) => (
-              <div key={idx} className="bg-slate-900/60 backdrop-blur-xl border border-slate-800 rounded-xl p-4 shadow-lg flex flex-col justify-between hover:border-slate-700 transition-colors">
-                  <div className={`p-2 w-fit rounded-lg mb-3 ${kpi.bg} ${kpi.color}`}><kpi.icon size={18} /></div>
+              <div key={idx} className="bg-gradient-to-tr from-slate-900/40 to-slate-950/40 backdrop-blur-sm border border-slate-800/50 rounded-2xl p-4 shadow-2xl flex flex-col justify-between hover:scale-105 transition-transform duration-300">
+                  <div className={`p-3 w-fit rounded-xl mb-3 ring-1 ring-slate-800/30 ${kpi.bg} ${kpi.color}`}><kpi.icon size={18} /></div>
                   <div>
                     <h2 className="text-xl md:text-2xl font-bold text-white mb-1 truncate" title={kpi.value}>{kpi.value}</h2>
                     <p className="text-[10px] md:text-xs font-bold text-slate-500 uppercase tracking-wider">{kpi.title}</p>
@@ -185,11 +185,11 @@ const OverviewTab = ({ orders, displayData, filters, setFilters, availableMonths
         {/* Charts Grid */}
         <div className="space-y-6 mb-6">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-              <div className="lg:col-span-2 bg-slate-900/60 border border-slate-800 rounded-2xl p-5 shadow-lg">
+              <div className="lg:col-span-2 bg-gradient-to-br from-slate-900/40 to-slate-950/30 border border-slate-800/50 rounded-2xl p-5 shadow-2xl transition-transform hover:scale-102">
                   <h3 className="text-sm font-bold text-white mb-4 flex items-center gap-2"><TrendingUp size={16} className="text-violet-500"/> Spend Trend</h3>
                   <div className="h-56 md:h-64"><Line data={lineChartData} options={{maintainAspectRatio: false, plugins: {legend: {display: false}}, scales: {x: {grid: {display: false}, ticks: {font:{size:10}}}, y: {grid: {color: 'rgba(255,255,255,0.05)'}, ticks: {font:{size:10}}}}}} /></div>
               </div>
-              <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-5 shadow-lg">
+              <div className="bg-gradient-to-br from-slate-900/40 to-slate-950/30 border border-slate-800/50 rounded-2xl p-5 shadow-2xl transition-transform hover:scale-102">
                   <h3 className="text-sm font-bold text-white mb-4 flex items-center gap-2"><Package size={16} className="text-amber-500"/> Status</h3>
                   <div className="h-56 md:h-64 relative flex items-center justify-center">
                     <Doughnut data={donutChartData} options={{maintainAspectRatio: false, cutout: '70%', plugins: {legend: {position: 'bottom', labels: {color: '#94a3b8', boxWidth: 10, padding: 15}}}}} />
@@ -199,14 +199,14 @@ const OverviewTab = ({ orders, displayData, filters, setFilters, availableMonths
   
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                {[{t:'Returns', d:getTop5(returnsByProduct), c:'#f43f5e'}, {t:'Spend', d:getTop5(spendByProduct), c:'#10b981'}, {t:'Active', d:getTop5(activeByProduct), c:'#3b82f6'}].map((chart, i) => (
-                 <div key={i} className="bg-slate-900/60 border border-slate-800 rounded-2xl p-5 shadow-lg">
+                 <div key={i} className="bg-gradient-to-br from-slate-900/40 to-slate-950/30 border border-slate-800/50 rounded-2xl p-5 shadow-2xl transition-transform hover:scale-102">
                     <h3 className="text-sm font-bold text-white mb-2">{chart.t} by Product</h3>
                     <div className="h-48"><Bar data={{labels: chart.d.map(x=>x[0].substring(0,12)+'...'), datasets:[{data:chart.d.map(x=>x[1]), backgroundColor: chart.c, borderRadius:3}]}} options={horizontalChartOptions} /></div>
                  </div>
                ))}
             </div>
   
-            <div className="bg-gradient-to-r from-violet-900/40 to-slate-900/60 border border-slate-800 rounded-2xl p-5 flex flex-col md:flex-row items-center justify-between shadow-lg gap-4">
+              <div className="bg-gradient-to-r from-violet-900/30 via-slate-900/30 to-cyan-900/10 border border-slate-800/50 rounded-2xl p-5 flex flex-col md:flex-row items-center justify-between shadow-2xl gap-4 transition-all">
                 <div className="flex items-center gap-4 w-full md:w-auto">
                     <div className="p-3 bg-violet-500/20 rounded-full text-violet-400 shrink-0"><MapPin size={24}/></div>
                     <div className="text-left">
@@ -215,7 +215,7 @@ const OverviewTab = ({ orders, displayData, filters, setFilters, availableMonths
                         <p className="text-sm text-slate-400">{displayData.country}</p>
                     </div>
                 </div>
-                <div className="px-4 py-2 bg-slate-800 rounded-lg text-sm text-slate-300 border border-slate-700">
+                <div className="px-4 py-2 bg-slate-800/30 rounded-lg text-sm text-slate-200 border border-slate-700/40 backdrop-blur-sm">
                     {displayData.mobile || 'No contact info'}
                 </div>
             </div>
@@ -294,8 +294,8 @@ const OrdersTab = ({ orders, onActionClick, onBuyAgain }) => {
             }
 
             return (
-              <div key={order.order_id} className="bg-slate-900/60 border border-slate-800 rounded-2xl p-5 shadow-xl hover:border-slate-700 transition-all group flex flex-col justify-between relative overflow-hidden">
-                 <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-violet-500/10 to-transparent rounded-bl-full pointer-events-none"></div>
+              <div key={order.order_id} className="bg-gradient-to-br from-slate-900/40 to-slate-950/30 border border-slate-800/50 rounded-2xl p-5 shadow-2xl hover:shadow-3xl hover:scale-105 transition-transform duration-300 group flex flex-col justify-between relative overflow-hidden">
+                 <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-violet-600/8 to-transparent rounded-bl-full pointer-events-none"></div>
                  
                  <div>
                      {/* Header: ID + Status Badge */}
@@ -310,10 +310,10 @@ const OrdersTab = ({ orders, onActionClick, onBuyAgain }) => {
                      </div>
 
                      {/* Product Info */}
-                     <div className="flex items-center gap-3 mb-4 bg-slate-950/50 p-3 rounded-xl border border-slate-800">
-                        <div className="w-10 h-10 rounded-lg bg-slate-800 flex items-center justify-center border border-slate-700 shrink-0">
-                            <Package size={18} className="text-slate-400"/>
-                        </div>
+                     <div className="flex items-center gap-3 mb-4 bg-slate-900/30 p-3 rounded-xl border border-slate-800/40">
+                      <div className="w-12 h-12 rounded-lg bg-slate-800/40 flex items-center justify-center border border-slate-700/30 shrink-0">
+                        <Package size={18} className="text-slate-300"/>
+                      </div>
                         <div>
                             <p className="text-sm font-medium text-white">{order.items.length} Item{order.items.length > 1 ? 's' : ''}</p>
                             <p className="text-xs text-slate-500 truncate max-w-[150px]">{order.items[0]?.product_name}</p>
@@ -328,11 +328,11 @@ const OrdersTab = ({ orders, onActionClick, onBuyAgain }) => {
                                  <span>Shipped</span>
                                  <span>Delivered</span>
                              </div>
-                             <div className="h-1.5 w-full bg-slate-800 rounded-full overflow-hidden">
-                                 <div 
-                                     className="h-full bg-gradient-to-r from-blue-600 to-violet-500 rounded-full transition-all duration-1000"
-                                     style={{ width: `${((currentStepIndex + 1) / steps.length) * 100}%` }}
-                                 ></div>
+                             <div className="h-2 w-full bg-slate-800/40 rounded-full overflow-hidden">
+                               <div 
+                                 className="h-full bg-gradient-to-r from-cyan-500 to-violet-500 rounded-full transition-all duration-700 ease-out shadow-inner"
+                                 style={{ width: `${((currentStepIndex + 1) / steps.length) * 100}%` }}
+                               ></div>
                              </div>
                              <div className="flex justify-between items-center mt-2 text-[10px]">
                                  <span className="text-slate-500">Est. Delivery:</span>
@@ -342,12 +342,12 @@ const OrdersTab = ({ orders, onActionClick, onBuyAgain }) => {
                      )}
                  </div>
 
-                 <div className="mt-2 pt-4 border-t border-slate-800">
+                 <div className="mt-2 pt-4 border-t border-slate-800/40">
                      <div className="flex justify-between items-center mb-4">
                          <span className="text-xs text-slate-400 uppercase font-bold">Total Amount</span>
                          <span className="text-lg font-bold text-white">${order.order_total_amount.toFixed(2)}</span>
                      </div>
-                     {ButtonComponent}
+                   <div className="space-y-2">{ButtonComponent}</div>
                  </div>
               </div>
             );
@@ -367,11 +367,11 @@ const OrdersTab = ({ orders, onActionClick, onBuyAgain }) => {
 //  SUB-COMPONENT: PAYMENTS TAB
 // ==========================================
 const PaymentsTab = ({ orders }) => {
-  return (
-    <div className="animate-fade-in-up">
+    return (
+     <div className="animate-fade-in-up">
        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {orders.map(o => (
-              <div key={o.order_id} className="bg-slate-900/60 border border-slate-800 rounded-2xl p-5 shadow-xl hover:border-slate-700 transition-all flex flex-col justify-between">
+         {orders.map(o => (
+            <div key={o.order_id} className="bg-gradient-to-br from-slate-900/40 to-slate-950/30 border border-slate-800/50 rounded-2xl p-5 shadow-2xl hover:scale-105 transition-transform duration-300 flex flex-col justify-between">
                   <div>
                       <div className="flex justify-between items-start mb-4">
                           <div>
@@ -400,21 +400,21 @@ const PaymentsTab = ({ orders }) => {
                       </div>
                   </div>
 
-                  <div className="pt-4 border-t border-slate-800">
+                    <div className="pt-4 border-t border-slate-800/40">
                       {o.order_status === 'Returned' ? (
-                          <div className="w-full bg-emerald-500/10 border border-emerald-500/20 py-2 rounded-lg flex items-center justify-center gap-2 text-emerald-400 text-xs font-bold uppercase">
-                              <CheckCircle size={14} /> Refunded
-                          </div>
+                        <div className="w-full bg-emerald-500/10 border border-emerald-500/20 py-2 rounded-xl flex items-center justify-center gap-2 text-emerald-300 text-xs font-bold uppercase shadow-sm">
+                          <CheckCircle size={14} /> Refunded
+                        </div>
                       ) : o.order_status === 'Return Requested' ? (
-                          <div className="w-full bg-amber-500/10 border border-amber-500/20 py-2 rounded-lg flex items-center justify-center gap-2 text-amber-400 text-xs font-bold uppercase">
-                              <Loader size={14} className="animate-spin" /> Refund Pending
-                          </div>
+                        <div className="w-full bg-amber-500/10 border border-amber-500/20 py-2 rounded-xl flex items-center justify-center gap-2 text-amber-300 text-xs font-bold uppercase shadow-sm">
+                          <Loader size={14} className="animate-spin" /> Refund Pending
+                        </div>
                       ) : (
-                          <div className="w-full bg-emerald-500/10 border border-emerald-500/20 py-2 rounded-lg flex items-center justify-center gap-2 text-emerald-400 text-xs font-bold uppercase">
-                              <CheckCircle size={14} /> Paid Successfully
-                          </div>
+                        <div className="w-full bg-emerald-500/10 border border-emerald-500/20 py-2 rounded-xl flex items-center justify-center gap-2 text-emerald-300 text-xs font-bold uppercase shadow-sm">
+                          <CheckCircle size={14} /> Paid Successfully
+                        </div>
                       )}
-                  </div>
+                    </div>
               </div>
           ))}
        </div>
@@ -429,31 +429,31 @@ const ProfileTab = ({ displayData, handleProfileSave, isEditing, setIsEditing, e
   const handleImageChange = (e) => { const f=e.target.files[0]; if(f){ const r=new FileReader(); r.onloadend=()=>setEditData(p=>({...p,profileImage:r.result})); r.readAsDataURL(f);} };
 
   return (
-    <div className="max-w-3xl mx-auto bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden animate-fade-in-up shadow-2xl">
+    <div className="max-w-3xl mx-auto bg-gradient-to-br from-slate-900/40 to-slate-950/30 border border-slate-800/50 rounded-2xl overflow-hidden animate-fade-in-up shadow-2xl">
       <div className="h-32 md:h-40 bg-gradient-to-r from-violet-800 to-indigo-900 relative">
         <div className="absolute -bottom-10 md:-bottom-12 left-6 md:left-8">
             <div className="relative group w-20 h-20 md:w-24 md:h-24">
                 <div className="w-full h-full rounded-full bg-slate-950 p-1 ring-4 ring-slate-900 overflow-hidden">
                     {(isEditing?editData.profileImage:displayData.profileImage)?<img src={isEditing?editData.profileImage:displayData.profileImage} className="w-full h-full rounded-full object-cover" alt="p"/>:<div className="w-full h-full bg-slate-800 flex items-center justify-center"><User size={28} className="text-slate-500"/></div>}
                 </div>
-                {isEditing && <label className="absolute bottom-0 right-0 bg-violet-600 p-2 rounded-full cursor-pointer"><Camera size={12} className="text-white"/><input type="file" className="hidden" onChange={handleImageChange}/></label>}
+                {isEditing && <label className="absolute bottom-0 right-0 bg-gradient-to-r from-violet-600 to-cyan-500 p-2 rounded-full cursor-pointer shadow-md"><Camera size={12} className="text-white"/><input type="file" className="hidden" onChange={handleImageChange}/></label>}
             </div>
         </div>
       </div>
       <div className="pt-14 md:pt-16 px-6 md:px-8 pb-8">
         <div className="flex flex-col sm:flex-row justify-between items-start mb-6 gap-4">
           <div><h2 className="text-xl md:text-2xl font-bold text-white">{displayData.fullName}</h2><p className="text-sm text-slate-400">{displayData.email}</p></div>
-          <button onClick={()=>setIsEditing(!isEditing)} className="text-sm bg-slate-800 text-white px-4 py-2 rounded-lg border border-slate-700">{isEditing?'Cancel':'Edit Profile'}</button>
+          <button onClick={()=>setIsEditing(!isEditing)} className="text-sm bg-gradient-to-r from-violet-600 to-cyan-500 text-white px-4 py-2 rounded-xl border border-transparent shadow-md">{isEditing?'Cancel':'Edit Profile'}</button>
         </div>
         {isEditing ? (
           <form onSubmit={handleProfileSave} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {['firstName', 'lastName', 'mobile', 'address'].map(f=><input key={f} value={editData[f]} onChange={e=>setEditData({...editData,[f]:e.target.value})} placeholder={f} className="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 text-sm text-white"/>)}
-            <button type="submit" className="md:col-span-2 bg-violet-600 text-white py-3 rounded-lg font-bold">Update Profile</button>
+            {['firstName', 'lastName', 'mobile', 'address'].map(f=><input key={f} value={editData[f]} onChange={e=>setEditData({...editData,[f]:e.target.value})} placeholder={f} className="w-full bg-transparent border border-slate-800/40 rounded-xl p-3 text-sm text-white outline-none focus:ring-2 focus:ring-cyan-400/30"/>) }
+            <button type="submit" className="md:col-span-2 bg-gradient-to-r from-violet-600 to-cyan-500 text-white py-3 rounded-xl font-bold shadow-md">Update Profile</button>
           </form>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="p-5 rounded-xl bg-slate-800/30 border border-slate-700"><h4 className="text-sm text-slate-400 font-bold uppercase mb-2">Address</h4><p className="text-white">{displayData.address}</p></div>
-            <div className="p-5 rounded-xl bg-slate-800/30 border border-slate-700"><h4 className="text-sm text-slate-400 font-bold uppercase mb-2">Phone</h4><p className="text-white">{displayData.mobile || "N/A"}</p></div>
+            <div className="p-5 rounded-2xl bg-slate-800/30 border border-slate-700/30 backdrop-blur-sm"><h4 className="text-sm text-slate-400 font-bold uppercase mb-2">Address</h4><p className="text-white">{displayData.address}</p></div>
+            <div className="p-5 rounded-2xl bg-slate-800/30 border border-slate-700/30 backdrop-blur-sm"><h4 className="text-sm text-slate-400 font-bold uppercase mb-2">Phone</h4><p className="text-white">{displayData.mobile || "N/A"}</p></div>
           </div>
         )}
       </div>
@@ -653,21 +653,41 @@ const UserDashboard = () => {
 
       <div className="relative z-10 p-4 max-w-[1600px] mx-auto">
         
-        <header className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-4 mb-6 border-b border-slate-800 pb-4">
-            <div>
-                <h1 className="text-xl md:text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-violet-300 to-cyan-300">Hello, {displayData.firstName}</h1>
-                <p className="text-xs text-slate-400 mt-1">ID: <span className="font-mono text-white bg-slate-800 px-1 rounded">{displayData.customerId}</span></p>
-            </div>
-            <div className="w-full lg:w-auto overflow-x-auto scrollbar-hide">
-                <div className="flex bg-slate-900/80 p-1 rounded-lg border border-slate-800 backdrop-blur-md w-max">
-                    {[{id:'overview', label:'Dashboard', icon:LayoutDashboard}, {id:'orders', label:'Orders', icon:ShoppingBag}, {id:'payments', label:'Payments', icon:CreditCard}, {id:'profile', label:'Profile', icon:User}].map((tab) => (
-                        <button key={tab.id} onClick={() => setActiveTab(tab.id)} className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition-all whitespace-nowrap ${activeTab === tab.id ? 'bg-violet-600 text-white shadow' : 'text-slate-400 hover:text-white'}`}>
-                            <tab.icon size={14} /> <span>{tab.label}</span>
-                        </button>
-                    ))}
-                </div>
-            </div>
-        </header>
+<header className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-8 bg-gradient-to-tr from-slate-900/50 to-slate-950/40 border border-slate-800/50 backdrop-blur-md p-5 rounded-2xl shadow-2xl">
+  
+  <div>
+    <h1 className="text-2xl md:text-4xl font-extrabold bg-gradient-to-r from-violet-400 to-cyan-400 bg-clip-text text-transparent">
+      Welcome, {displayData.firstName} 👋
+    </h1>
+    <p className="text-sm text-slate-400 mt-2">
+      Customer ID: 
+      <span className="ml-2 font-mono text-white bg-slate-800 px-2 py-1 rounded-md">
+        {displayData.customerId}
+      </span>
+    </p>
+  </div>
+
+  <div className="flex bg-slate-800/30 p-1 rounded-2xl border border-slate-700/30 shadow-inner backdrop-blur-sm">
+    {[
+      {id:'overview', label:'Dashboard', icon:LayoutDashboard},
+      {id:'orders', label:'Orders', icon:ShoppingBag},
+      {id:'payments', label:'Payments', icon:CreditCard},
+      {id:'profile', label:'Profile', icon:User}
+    ].map((tab) => (
+      <button
+        key={tab.id}
+        onClick={() => setActiveTab(tab.id)}
+        className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300
+        ${activeTab === tab.id 
+          ? 'bg-gradient-to-r from-violet-600 to-cyan-500 text-white shadow-lg scale-105 ring-1 ring-violet-600/20' 
+          : 'text-slate-400 hover:text-white hover:bg-slate-700/50'}`}
+      >
+        <tab.icon size={16} />
+        {tab.label}
+      </button>
+    ))}
+  </div>
+</header>
 
         {activeTab === 'overview' && <FeaturedProducts products={topProducts} onAddToCart={handleAddToCart} />}
         
@@ -690,30 +710,30 @@ const UserDashboard = () => {
         {activeTab === 'profile' && <ProfileTab displayData={displayData} handleProfileSave={handleProfileSave} isEditing={isEditingProfile} setIsEditing={setIsEditingProfile} editData={editFormData} setEditData={setEditFormData} />}
 
         {modalOpen && (
-            <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4">
-                <div className="bg-slate-900 border border-slate-700 w-full max-w-xs rounded-xl p-5 shadow-2xl animate-fade-in-up">
-                    <h3 className="text-lg font-bold text-white mb-3">
-                        {actionType === 'cancel' ? 'Cancel Order' : 'Return Item'}
-                    </h3>
-                    <p className="text-xs text-slate-400 mb-3">Please select a reason for this action:</p>
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-md p-4">
+            <div className="bg-gradient-to-br from-slate-900/60 to-slate-950/40 border border-slate-800/50 w-full max-w-md rounded-2xl p-6 shadow-2xl animate-fade-in-up">
+              <h3 className="text-lg font-bold text-white mb-3">
+                {actionType === 'cancel' ? 'Cancel Order' : 'Return Item'}
+              </h3>
+              <p className="text-xs text-slate-400 mb-3">Please select a reason for this action:</p>
                     
-                    <div className="space-y-2 mb-4">
-                        {(actionType === 'cancel' ? CANCEL_REASONS : RETURN_REASONS).map(r => (
-                            <label key={r} className={`flex items-center gap-2 p-2.5 rounded-lg border cursor-pointer transition-colors ${selectedReason === r ? 'bg-violet-600/20 border-violet-500' : 'bg-slate-800/50 border-slate-700 hover:bg-slate-800'}`}>
-                                <input type="radio" value={r} checked={selectedReason === r} onChange={e => setSelectedReason(e.target.value)} className="accent-violet-500 w-4 h-4"/>
-                                <span className="text-xs text-white font-medium">{r}</span>
-                            </label>
-                        ))}
-                    </div>
+              <div className="space-y-2 mb-4">
+                {(actionType === 'cancel' ? CANCEL_REASONS : RETURN_REASONS).map(r => (
+                  <label key={r} className={`flex items-center gap-2 p-3 rounded-xl border cursor-pointer transition-all ${selectedReason === r ? 'bg-gradient-to-r from-violet-700/20 to-cyan-700/10 border-violet-500/40 ring-1 ring-violet-500/30 shadow-sm' : 'bg-slate-800/30 border-slate-700/30 hover:bg-slate-800/40'}`}>
+                    <input type="radio" value={r} checked={selectedReason === r} onChange={e => setSelectedReason(e.target.value)} className="accent-cyan-400 w-4 h-4"/>
+                    <span className="text-xs text-white font-medium">{r}</span>
+                  </label>
+                ))}
+              </div>
                     
-                    <div className="flex gap-2">
-                        <button onClick={() => setModalOpen(false)} className="flex-1 py-2 bg-slate-800 rounded-lg text-xs font-bold text-slate-300 hover:bg-slate-700 transition-colors">Back</button>
-                        <button onClick={handleActionSubmit} className={`flex-1 py-2 rounded-lg text-xs font-bold text-white transition-colors ${actionType === 'cancel' ? 'bg-rose-600 hover:bg-rose-500' : 'bg-amber-600 hover:bg-amber-500'}`}>
-                            Confirm {actionType === 'cancel' ? 'Cancel' : 'Return'}
-                        </button>
-                    </div>
-                </div>
+              <div className="flex gap-3">
+                <button onClick={() => setModalOpen(false)} className="flex-1 py-2 bg-slate-800/30 rounded-xl text-xs font-bold text-slate-200 hover:bg-slate-700/30 transition-all">Back</button>
+                <button onClick={handleActionSubmit} className={`flex-1 py-2 rounded-xl text-xs font-bold text-white transition-all ${actionType === 'cancel' ? 'bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-400 hover:to-rose-500 shadow-rose-500/20' : 'bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 shadow-amber-400/20'}`}>
+                  Confirm {actionType === 'cancel' ? 'Cancel' : 'Return'}
+                </button>
+              </div>
             </div>
+          </div>
         )}
       </div>
     </div>

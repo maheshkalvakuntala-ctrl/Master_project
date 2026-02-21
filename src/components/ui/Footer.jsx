@@ -30,7 +30,7 @@ const Footer = () => {
         <div className="flex flex-col gap-5 items-center sm:items-start">
           <div className="flex flex-col mx-auto items-center sm:items-start">
             <span className="text-2xl font-bold tracking-tighter text-white group-hover:text-blue-400 transition-colors">
-              GSH<span className="text-blue-500">.</span>STORE
+              MK <span className="text-blue-500">.</span> STORE
             </span>
             <span className="text-[10px] tracking-widest text-slate-400 uppercase -mt-1">
               Premium Collection
@@ -46,7 +46,7 @@ const Footer = () => {
               { icon: <FaFacebookF />, link: "https://www.facebook.com/" },
               { icon: <FaTwitter />, link: "https://x.com/" },
               { icon: <FaInstagram />, link: "https://gsh-personal.vercel.app/" },
-              { icon: <FaLinkedinIn />, link: "https://www.linkedin.com/in/srihari-gudipati-0410a925a/" },
+              { icon: <FaLinkedinIn />, link: "https://www.linkedin.com/in/mahesh-kalvakuntla-49296424b/" },
             ].map((s, i) => (
               <a
                 key={i}
@@ -88,7 +88,7 @@ const Footer = () => {
           <ul className="space-y-3 text-sm">
             <li>
               <a href="tel:+919347659937" className="hover:text-blue-500 transition-colors duration-200">
-                +91-9347659937
+                +91-6300608164
               </a>
             </li>
             <li className="break-all">
@@ -96,7 +96,7 @@ const Footer = () => {
                 href="mailto:gudipatisrihari7@gmail.com"
                 className="hover:text-blue-500 transition-colors duration-200"
               >
-                gudipatisrihari7@gmail.com
+                kalvakuntlamahesh4@gmail.com
               </a>
             </li>
             <li>Hyderabad, India</li>
@@ -105,7 +105,7 @@ const Footer = () => {
 
         {/* 4. Why Choose Us */}
         <div className="flex flex-col gap-4">
-          <h4 className="text-lg font-semibold text-white tracking-wide">Why GSH STORE?</h4>
+          <h4 className="text-lg font-semibold text-white tracking-wide">Why MK STORE?</h4>
           <ul className="space-y-3  mx-auto text-sm text-slate-400">
             <li className="flex items-center justify-center sm:justify-start gap-2">
               <span className="text-blue-500">✔</span> Premium quality products
@@ -127,7 +127,7 @@ const Footer = () => {
       {/* Bottom Bar - Removed top margin on mobile so it's compact */}
       <div className="mt-0 sm:mt-16 sm:pt-8 sm:border-t border-white/5 text-center">
         <p className="text-xs sm:text-sm text-slate-500">
-          © {new Date().getFullYear()} GSH STORE. All rights reserved.
+          © {new Date().getFullYear()} MK STORE. All rights reserved.
         </p>
       </div>
     </footer>

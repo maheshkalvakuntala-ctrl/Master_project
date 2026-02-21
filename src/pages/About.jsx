@@ -22,7 +22,7 @@ const About = () => {
             Redefining Retail
           </h1>
           <p className="text-lg sm:text-xl md:text-2xl text-slate-300 font-light tracking-wide px-4">
-            Experience the future of shopping with GSH Retails.
+            Experience the future of shopping with MK Retails.
           </p>
         </div>
       </section>
@@ -35,7 +35,7 @@ const About = () => {
             { 
               icon: <FaUsers />, 
               title: "Who We Are", 
-              desc: "GSH Retails is a customer-centric e-commerce platform designed to make online shopping simple, affordable, and reliable.",
+              desc: "MK Retails is a customer-centric e-commerce platform designed to make online shopping simple, affordable, and reliable.",
             },
             { 
               icon: <FaBullseye />, 
@@ -95,7 +95,7 @@ const About = () => {
           
           {/* Content Side */}
           <div className="flex-1 p-8 sm:p-12 lg:p-16 order-2 lg:order-1">
-            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Why Choose GSH.STORE?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Why Choose MK .STORE?</h2>
             <p className="text-lg text-slate-400 mb-8 font-light leading-relaxed">
               We don't just sell products; we deliver experiences. Here is why thousands of customers trust us.
             </p>

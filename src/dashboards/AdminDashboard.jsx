@@ -7,7 +7,7 @@ import {
 import {
   LayoutDashboard, ShoppingBag, Users, Package, Settings, FileText,
   BarChart2, Loader, Ticket, MapPin, Trophy, Search, Crown, X, Menu,
-  AlertTriangle, User 
+  AlertTriangle, User , Camera
 } from 'lucide-react';
 import { auth, db } from "../firebase";
 import { doc, getDoc, updateDoc, collection, getDocs, addDoc, serverTimestamp, deleteDoc } from "firebase/firestore";
@@ -499,7 +499,7 @@ const AdminDashboard = () => {
       {/* TOP NAVBAR */}
       <nav className="h-20 bg-[#1e293b]/50 backdrop-blur-xl border-b border-white/5 flex items-center justify-between px-4 lg:px-10 shrink-0 relative z-20">
         <div className="flex items-center gap-4">
-          <h2 className="text-2xl font-bold tracking-tight text-white">GSH&nbsp;<span className="text-cyan-400">Admin</span></h2>
+          <h2 className="text-2xl font-bold tracking-tight text-white"> MK &nbsp;<span className="text-cyan-400">Admin</span></h2>
         </div>
         <div className="hidden lg:flex items-center gap-1 bg-white/5 p-1.5 rounded-full border border-white/5">
           {navItems.map((item) => (
@@ -699,7 +699,7 @@ const AdminDashboard = () => {
                               </thead>
                               <tbody className="divide-y divide-white/5 text-sm">
                                   {recentReturns.length > 0 ? recentReturns.map((order) => (
-                                      <tr key={order.order_id} className="hover:bg-white/5">
+                                      <tr key={`${order.isFirebase ? 'fb' : 'static'}-${order.order_id}`} className="hover:bg-white/5">
                                           <td className="p-4 text-slate-300">#{order.order_id.toString().slice(0,8)}</td>
                                           <td className="p-4 text-white">{order.customer_id}</td>
                                           <td className="p-4 text-center"><span className="px-3 py-1 rounded-full text-[10px] bg-rose-500/20 text-rose-400">Returned</span></td>

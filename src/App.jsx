@@ -9,6 +9,7 @@ import { setProfile, logout } from './slices/userSlice';
 import BouncingLoader from "./pages/BouncingLoader";
 import MainLayout from "./components/ui/MainLayout";
 import { Upload } from "lucide-react";
+import MLPredict from "./pages/MLPredict";
 
 // Lazy Imports
 const Home = lazy(() => import("./pages/Home"));
@@ -79,6 +80,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/search" element={<Search />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/ml-predict" element={<MLPredict />} />
           
           {/* --- Checkout Routes --- */}
           <Route path="/shipping" element={<Shipping />} />

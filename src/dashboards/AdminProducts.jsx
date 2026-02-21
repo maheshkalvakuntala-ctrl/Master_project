@@ -312,7 +312,7 @@ const AdminProducts = ({ initialProducts = [], orders = [], orderItems = [], pay
 
   return (
     <div className="space-y-6 animate-fade-in-up pb-10">
-      <h1 className="text-2xl font-bold text-white tracking-tight">Products In GSH STORE</h1>
+      <h1 className="text-2xl font-bold text-white tracking-tight">Products In MK . STORE</h1>
       
       {/* --- FILTERS --- */}
       <div className="flex flex-col sm:flex-row justify-end items-center gap-3 bg-[#0c2543] p-3 rounded-2xl border border-[#163a66] shadow-sm">

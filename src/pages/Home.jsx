@@ -63,12 +63,21 @@ const ProductCard = ({ product, isAdmin, onAddToCart, onBuyNow }) => {
       <div className="p-3 sm:p-4 flex flex-col flex-grow">
         
         {/* Category & Title */}
-        <div className="mb-2">
-            <p className="text-[10px] sm:text-xs text-slate-400 mb-0.5 sm:mb-1 capitalize">{product.product_category}</p>
-            <h3 className="text-xs sm:text-base font-bold text-white leading-tight line-clamp-2 min-h-[2rem] sm:min-h-[2.5rem] group-hover:text-blue-400 transition-colors">
-                {product.product_name}
-            </h3>
-        </div>
+<div className="mb-2 space-y-0.5">
+  <p className="text-[10px] sm:text-xs text-slate-400 capitalize">
+    {product.product_category}
+  </p>
+
+  {/* BRAND */}
+  <p className="text-[9px] sm:text-[11px] font-semibold uppercase tracking-wide text-blue-400">
+    {product.product_brand || product.brand || "Generic"}
+  </p>
+
+  <h3 className="text-xs sm:text-base font-bold text-white leading-tight line-clamp-2 group-hover:text-blue-400 transition-colors">
+    {product.product_name}
+  </h3>
+</div>
+
 
         {/* Price & Rating Row */}
         <div className="flex items-center justify-between mb-3 sm:mb-4 mt-auto">
@@ -131,6 +140,7 @@ const Home = () => {
   // Lists
   const departments = ["All", "Men", "Women", "Kids"];
   const shopCategories = [
+    "shirt",
     "Jeans", "Shorts", "Dresses", "Skirts", "Swim", "Socks", 
     "Maternity", "Suits", "Intimates", "Pants & Capris", 
     "Fashion Hoodies & Sweatshirts", "Plus"
@@ -266,26 +276,50 @@ const Home = () => {
       <Toaster position="top-center" />
 
       {/* --- HERO SECTION --- */}
-      <section className="relative min-h-[500px] md:h-[90vh] flex items-center justify-center text-center px-4">
-        <div className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat md:bg-fixed" style={{ backgroundImage: 'url("https://wallpapercave.com/wp/wp8036239.jpg")' }}></div>
-        <div className="absolute inset-0 z-10 bg-gradient-to-t from-slate-900 via-slate-900/80 to-slate-900/40"></div>
-        
-        <div className="relative z-20 max-w-4xl animate-fade-in-up px-2 sm:px-4">
-          <span className="inline-block py-1 px-3 sm:px-4 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-[10px] sm:text-xs md:text-sm font-bold tracking-wider uppercase mb-4 sm:mb-6 backdrop-blur-md">New Season Arrival</span>
-          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold leading-tight mb-4 sm:mb-6">
-            Redefine your <br /> 
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-200 to-blue-500">digital style.</span>
-          </h1>
-          <p className="text-sm sm:text-lg md:text-xl text-slate-300 mb-6 sm:mb-8 max-w-xl sm:max-w-2xl mx-auto font-light leading-relaxed px-4">
-            Premium dark aesthetics for the modern minimalist. Curated fashion for those who dare to stand out.
-          </p>
-          <div className="flex justify-center">
-            <button onClick={() => document.getElementById('shop').scrollIntoView({ behavior: 'smooth' })} className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-8 py-2.5 sm:py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-semibold transition-all duration-300 shadow-[0_0_20px_rgba(37,99,235,0.5)] hover:shadow-[0_0_30px_rgba(37,99,235,0.7)] text-sm sm:text-base">
-              Explore Collection <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
-            </button>
-          </div>
-        </div>
-      </section>
+{/* --- HERO SECTION (FIXED) --- */}
+<section className="relative min-h-[550px] md:min-h-[90vh] flex items-center justify-center text-center px-4 pb-32">
+  
+  {/* Background */}
+  <div 
+    className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat md:bg-fixed"
+    style={{ backgroundImage: 'url("https://wallpapercave.com/wp/wp8036239.jpg")' }}
+  ></div>
+
+  {/* Overlay */}
+  <div className="absolute inset-0 z-10 bg-gradient-to-t from-slate-900 via-slate-900/80 to-slate-900/40"></div>
+
+  {/* Content */}
+  <div className="relative z-20 max-w-4xl animate-fade-in-up px-2 sm:px-4">
+    
+    <span className="inline-block py-1 px-4 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs sm:text-sm font-bold tracking-wider uppercase mb-6 backdrop-blur-md">
+      New Season Arrival
+    </span>
+
+    <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold leading-tight mb-6">
+      Redefine your <br />
+      <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-200 to-blue-500">
+        digital style.
+      </span>
+    </h1>
+
+    <p className="text-sm sm:text-lg md:text-xl text-slate-300 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
+      Premium dark aesthetics for the modern minimalist. Curated fashion for those who dare to stand out.
+    </p>
+
+    {/* CTA */}
+    <div className="flex justify-center">
+      <button
+        onClick={() => document.getElementById('shop').scrollIntoView({ behavior: 'smooth' })}
+        className="group inline-flex items-center gap-3 px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-semibold transition-all duration-300 shadow-[0_0_20px_rgba(37,99,235,0.5)] hover:shadow-[0_0_30px_rgba(37,99,235,0.7)]"
+      >
+        Explore Collection
+        <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+      </button>
+    </div>
+
+  </div>
+</section>
+
 
       {/* --- FLOATING TRUST BAR --- */}
       <section className="relative z-30 px-4 -mt-12 sm:-mt-16 md:-mt-24 mb-12 sm:mb-16 md:mb-24">
@@ -478,7 +512,14 @@ const Home = () => {
                 className="w-16 h-16 object-cover rounded-lg shadow-sm" 
               />
               <div className="flex flex-col justify-center">
-                <h4 className="font-semibold text-sm text-white line-clamp-1 pr-2">{popupProduct.product_name}</h4>
+               <p className="text-[10px] uppercase tracking-wide text-blue-400 font-semibold">
+  {popupProduct.product_brand || popupProduct.brand || "Generic"}
+</p>
+
+<h4 className="font-semibold text-sm text-white line-clamp-1">
+  {popupProduct.product_name}
+</h4>
+
                 <p className="text-slate-400 text-xs mb-1">{popupProduct.product_department}</p>
                 <span className="text-blue-400 font-bold">₹{Number(popupProduct.selling_unit_price).toFixed(2)}</span>
               </div>
