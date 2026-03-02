@@ -119,12 +119,11 @@ const Search = () => {
            </div>
         ) : filteredProducts.length > 0 ? (
           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-8">
-            {filteredProducts.map((p) => (
+            {filteredProducts.map((p, idx) => (
               <div 
-                key={p.product_id} 
+                key={`${p.product_id}-${idx}`}
                 className="group bg-slate-800 rounded-2xl overflow-hidden border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-900/10 flex flex-col h-full relative"
-              >
-                {/* Image Section */}
+              >                {/* Image Section */}
                 <div className="relative h-48 sm:h-64 overflow-hidden bg-slate-700">
                   <img 
                     src={p.image_url || "https://via.placeholder.com/300"} 

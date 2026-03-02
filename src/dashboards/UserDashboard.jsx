@@ -31,6 +31,9 @@ import {
   AlertCircle, CheckCircle, ChevronRight, ShoppingCart, Star, Camera, Filter, Calendar, Clock, RefreshCw, XCircle, Truck
 } from 'lucide-react';
 
+// prediction utils
+import { fetchReturnPrediction, formatProb, riskColor } from "../utils/mlPrediction";
+
 // --- CHART JS IMPORTS ---
 import { Line, Bar, Doughnut } from 'react-chartjs-2';
 import { 
@@ -228,6 +231,37 @@ const OverviewTab = ({ orders, displayData, filters, setFilters, availableMonths
 //  SUB-COMPONENT: ORDERS TAB (UPDATED WITH TRACKING & DATES)
 // ==========================================
 const OrdersTab = ({ orders, onActionClick, onBuyAgain }) => {
+  const [predictions, setPredictions] = React.useState({}); // order_id -> { return_risk, return_probability }
+
+  // fetch return predictions whenever the orders list changes
+  React.useEffect(() => {
+    if (!orders || orders.length === 0) return;
+    let cancelled = false;
+
+    const loadPredictions = async () => {
+      try {
+        const results = await Promise.all(
+          orders.map(o =>
+            fetchReturnPrediction(o)
+              .then(res => ({ id: o.order_id, data: res }))
+              .catch(() => ({ id: o.order_id, data: null }))
+          )
+        );
+        if (cancelled) return;
+        const map = {};
+        results.forEach(r => {
+          if (r.data) map[r.id] = r.data;
+        });
+        setPredictions(prev => ({ ...prev, ...map }));
+      } catch (e) {
+        console.error("Failed to load return predictions", e);
+      }
+    };
+
+    loadPredictions();
+    return () => { cancelled = true; };
+  }, [orders]);
+
   return (
     <div className="animate-fade-in-up">
       {orders.length > 0 ? (
@@ -319,6 +353,18 @@ const OrdersTab = ({ orders, onActionClick, onBuyAgain }) => {
                             <p className="text-xs text-slate-500 truncate max-w-[150px]">{order.items[0]?.product_name}</p>
                         </div>
                      </div>
+
+                     {/* ML return prediction (if available) */}
+                     {predictions[order.order_id] && (
+                       <div className="mb-4 flex items-center gap-2">
+                         <span className={`px-2 py-0.5 rounded text-[10px] font-bold border ${riskColor(predictions[order.order_id].return_risk)}`}>
+                           {predictions[order.order_id].return_risk}
+                         </span>
+                         <span className="text-[10px] text-slate-400 italic">
+                           {formatProb(predictions[order.order_id].return_probability)}
+                         </span>
+                       </div>
+                     )}
 
                      {/* Tracking Progress Bar */}
                      {!isCancelled && !isReturned && order.order_status !== 'Return Requested' && (

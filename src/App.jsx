@@ -10,6 +10,8 @@ import BouncingLoader from "./pages/BouncingLoader";
 import MainLayout from "./components/ui/MainLayout";
 import { Upload } from "lucide-react";
 import MLPredict from "./pages/MLPredict";
+import ReturnPredictor from "./pages/ReturnPredictor";
+// predictor page removed; logic now handled inside AdminOrders
 
 // Lazy Imports
 const Home = lazy(() => import("./pages/Home"));
@@ -24,6 +26,7 @@ const ResetPassword = lazy(() => import("./pages/ResetPassword"));
 const Shipping = lazy(() => import("./pages/Shipping"));
 const Payment = lazy(() => import("./pages/Payment"));
 const OrderSuccess = lazy(() => import("./pages/OrderSuccess")); 
+import CancelPredictor from "./pages/CancelPredictor";
 
 // Dashboards
 const AdminDashboard = lazy(() => import("./dashboards/AdminDashboard"));
@@ -81,7 +84,10 @@ function App() {
           <Route path="/search" element={<Search />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/ml-predict" element={<MLPredict />} />
-          
+          {/* manual predictor route removed, model integrated into admin orders */}
+          <Route path="/pre" element={<ReturnPredictor />} />
+          <Route path="/can" element={<CancelPredictor />} />
+           
           {/* --- Checkout Routes --- */}
           <Route path="/shipping" element={<Shipping />} />
           <Route path="/payment" element={<Payment />} />

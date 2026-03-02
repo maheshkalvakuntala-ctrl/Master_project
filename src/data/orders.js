@@ -20401,7 +20401,7 @@ let orders=[
     },
     {
         "order_id": 49325,
-        "customer_id": 39482,
+        "customer_id":39482 ,
         "order_status": "Shipped",
         "order_created_date": "2024-01-17T17:22:18.100",
         "order_updated_date": "2024-01-17 17:22:18.100324",

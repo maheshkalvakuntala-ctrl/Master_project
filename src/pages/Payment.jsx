@@ -142,22 +142,37 @@ const CheckoutForm = ({ shippingAddress, totalPrice, cartItems, profile }) => {
       setProcessing(false);
     } else {
       try {
+        // Determine payment method label for ML prediction mapping
+        const paymentMethodLabel = selectedBankOffer !== 'default'
+          ? (selectedBankOffer.includes('ICICI') ? 'UPI' : 'CARD')
+          : 'CARD';
+
         const orderData = {
           email: profile.email,
           userId: profile.uid,
           customerName: shippingAddress.fullName,
           mobile: shippingAddress.mobile || '',
           shippingAddress: shippingAddress,
-          items: cartItems,
+          address: `${shippingAddress.address}, ${shippingAddress.city}, ${shippingAddress.pincode || ''}`,
+          items: cartItems.map(item => ({
+            id: item.id || item.product_id,
+            product_id: item.id || item.product_id,
+            name: item.name || item.product_name,
+            price: item.price || item.selling_unit_price || 0,
+            quantity: item.quantity || 1,
+            image: item.image || item.image_url || '',
+          })),
           amount: finalAmount,
           originalAmount: totalPrice,
           discountApplied: discount,
-          couponCode: appliedCoupon || selectedBankOffer, // Record which offer was used
+          discount_amount: discount,
+          couponCode: appliedCoupon || selectedBankOffer,
           totalAmount: finalAmount,
           currency: 'inr',
           paymentId: paymentMethod.id,
+          paymentMethod: paymentMethodLabel,   // ← used by FastAPI ML prediction
           paymentStatus: 'Paid',
-          orderStatus: 'Processing',
+          orderStatus: 'Payment Successful',   // ← shows in ML dashboard
           createdAt: serverTimestamp(),
         };
 

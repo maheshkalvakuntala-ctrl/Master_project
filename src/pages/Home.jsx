@@ -172,7 +172,15 @@ const Home = () => {
 
         // Combine Firebase products (newest) with Static products
         // We put firebaseProducts first so admin uploads show at the top
-        setAllProducts([...firebaseProducts, ...staticProducts]);
+        // Deduplicate by product_id, keeping first occurrence
+        const combined = [...firebaseProducts, ...staticProducts];
+        const seen = new Set();
+        const deduplicated = combined.filter(p => {
+          if (seen.has(p.product_id)) return false;
+          seen.add(p.product_id);
+          return true;
+        });
+        setAllProducts(deduplicated);
         
       } catch (error) {
         console.error("Error fetching products from Firebase:", error);
@@ -384,9 +392,9 @@ const Home = () => {
         </h3>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
-          {filteredProducts.map((p) => (
+          {filteredProducts.map((p, idx) => (
             <ProductCard 
-              key={p.product_id} 
+              key={`${p.product_id}-${idx}`}
               product={p} 
               isAdmin={isAdmin} 
               onAddToCart={handleAddToCart} 
@@ -439,7 +447,7 @@ const Home = () => {
          </div>
          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
             {trendingProducts.map((p) => (
-               <ProductCard key={p.product_id} product={p} isAdmin={isAdmin} onAddToCart={handleAddToCart} onBuyNow={handleBuyNow} />
+               <ProductCard key={`${p.product_id}-trending`} product={p} isAdmin={isAdmin} onAddToCart={handleAddToCart} onBuyNow={handleBuyNow} />
             ))}
          </div>
       </section>

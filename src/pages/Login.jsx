@@ -86,10 +86,13 @@ const Login = () => {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
       await checkUserRoleAndRedirect(userCredential.user);
 
-    } catch {
-      setError("Invalid email or password");
-      toast.error("Invalid credentials");
-    }
+    } catch (error) {
+  console.log("ERROR CODE:", error.code);
+  console.log("ERROR MESSAGE:", error.message);
+
+  setError(error.message);
+  toast.error(error.message);
+}
   };
 
   const handleGoogleLogin = async () => {
