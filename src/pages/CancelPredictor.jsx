@@ -103,7 +103,7 @@ const CancelPredictor = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/predict-cancel", {
+      const response = await fetch("https://backend-vpnc.onrender.com/predict-cancel", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
