@@ -5,7 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 
 // Firebase & Redux
 import { auth, db } from "../firebase";
-import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
+import { collection, query, where, getDocs } from "firebase/firestore";
 import { addItem } from '../slices/cartSlice';
 
 // Icons
@@ -14,11 +14,12 @@ import {
   FaStar, FaArrowRight, FaQuoteLeft, FaCheck, FaClock, FaFire, FaTimes, FaTags, FaUserFriends
 } from "react-icons/fa";
 
-// Data (Static fallback data)
-import { products as staticProducts } from "../data/dataUtils";
+// Data
+import { products } from "../data/dataUtils";
 
 // --- COMPONENT: PRODUCT CARD (RESPONSIVE) ---
-const ProductCard = ({ product, isAdmin, onAddToCart, onBuyNow }) => {
+const ProductCard = ({ product, isAdmin, onAddToCart }) => {
+  const navigate = useNavigate();
   
   const getProductImage = (p) => {
     if (p.image_url) return p.image_url;
@@ -42,8 +43,10 @@ const ProductCard = ({ product, isAdmin, onAddToCart, onBuyNow }) => {
   );
 
   return (
-    <div className="group bg-slate-800 rounded-xl sm:rounded-2xl overflow-hidden hover:scale-105 border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-900/10 flex flex-col h-full relative">
-      
+    <div
+      onClick={() => navigate(`/product/${product.product_id}`)}
+      className="group bg-slate-800 rounded-xl sm:rounded-2xl overflow-hidden cursor-pointer hover:scale-105 border border-slate-700/50 hover:border-blue-500/50 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-900/10 flex flex-col h-full relative"
+    >
       {/* --- Image Section --- */}
       <div className="relative h-40 sm:h-64 overflow-hidden bg-slate-700">
         <img 
@@ -63,26 +66,21 @@ const ProductCard = ({ product, isAdmin, onAddToCart, onBuyNow }) => {
       <div className="p-3 sm:p-4 flex flex-col flex-grow">
         
         {/* Category & Title */}
-<div className="mb-2 space-y-0.5">
-  <p className="text-[10px] sm:text-xs text-slate-400 capitalize">
-    {product.product_category}
-  </p>
-
-  {/* BRAND */}
-  <p className="text-[9px] sm:text-[11px] font-semibold uppercase tracking-wide text-blue-400">
-    {product.product_brand || product.brand || "Generic"}
-  </p>
-
-  <h3 className="text-xs sm:text-base font-bold text-white leading-tight line-clamp-2 group-hover:text-blue-400 transition-colors">
-    {product.product_name}
-  </h3>
-</div>
-
+        <div className="mb-2">
+            <p className="text-[10px] sm:text-xs text-slate-400 mb-0.5 sm:mb-1 capitalize">{product.product_category}</p>
+            <h3 className="text-xs sm:text-base font-bold text-white leading-tight line-clamp-2 min-h-[2rem] sm:min-h-[2.5rem] group-hover:text-blue-400 transition-colors">
+                {product.product_name}
+            </h3>
+          {/* 🔢 Product ID */}
+          <p className="inline-block mt-1 text-[9px] sm:text-[11px] bg-slate-700 text-slate-300 px-2 py-0.5 rounded-md font-mono">
+            ID: {product.product_id}
+          </p>
+        </div>
 
         {/* Price & Rating Row */}
         <div className="flex items-center justify-between mb-3 sm:mb-4 mt-auto">
             <div className="flex flex-col">
-                <span className="text-sm sm:text-xl font-bold text-white">₹{Number(product.selling_unit_price).toFixed(2)}</span>
+                <span className="text-sm sm:text-xl font-bold text-white">₹{product.selling_unit_price.toFixed(2)}</span>
             </div>
             {/* Rating */}
             <div className="flex flex-col items-end">
@@ -94,16 +92,22 @@ const ProductCard = ({ product, isAdmin, onAddToCart, onBuyNow }) => {
         {/* --- VISIBLE ACTION BUTTONS --- */}
         {!isAdmin ? (
             <div className="grid grid-cols-2 gap-1.5 sm:gap-2 mt-2 pt-2 sm:pt-3 border-t border-slate-700/50">
-                <button 
-                    onClick={() => onAddToCart(product)}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onAddToCart(product);
+              }}
                     className="flex items-center justify-center gap-1 sm:gap-2 bg-slate-700 hover:bg-slate-600 text-white text-[10px] sm:text-sm font-semibold py-2 sm:py-2.5 rounded-lg transition-all active:scale-95 border border-slate-600 hover:border-slate-500"
                 >
                     <FaShoppingCart className="text-blue-400 w-3 h-3 sm:w-3.5 sm:h-3.5"/> 
                     <span>Add</span>
                 </button>
                 
-                <button 
-                    onClick={() => onBuyNow(product)}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onAddToCart(product);
+              }}
                     className="flex items-center justify-center gap-1 sm:gap-2 bg-blue-600 hover:bg-blue-500 text-white text-[10px] sm:text-sm font-bold py-2 sm:py-2.5 rounded-lg shadow-lg shadow-blue-900/20 transition-all active:scale-95"
                 >
                     <FaBolt className="w-3 h-3 sm:w-3.5 sm:h-3.5" /> 
@@ -134,13 +138,9 @@ const Home = () => {
   const [activeCoupon, setActiveCoupon] = useState(null);
   const [timeLeft, setTimeLeft] = useState(0);
 
-  // New State to hold both static and fetched products
-  const [allProducts, setAllProducts] = useState(staticProducts);
-
   // Lists
-  const departments = ["All", "Men", "Women", "Kids"];
+  const departments = ["All", "Men", "Women"];
   const shopCategories = [
-    "shirt",
     "Jeans", "Shorts", "Dresses", "Skirts", "Swim", "Socks", 
     "Maternity", "Suits", "Intimates", "Pants & Capris", 
     "Fashion Hoodies & Sweatshirts", "Plus"
@@ -154,40 +154,6 @@ const Home = () => {
     checkAdmin();
     const timer = setTimeout(checkAdmin, 1000); 
     return () => clearTimeout(timer);
-  }, []);
-
-  // --- NEW: Fetch Products from Firebase ---
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        // Fetch products, ordering by ID or any field you prefer
-        const q = query(collection(db, "products"));
-        const querySnapshot = await getDocs(q);
-        
-        const firebaseProducts = [];
-        querySnapshot.forEach((doc) => {
-          // Merge doc ID and data
-          firebaseProducts.push({ product_id: doc.id, ...doc.data() });
-        });
-
-        // Combine Firebase products (newest) with Static products
-        // We put firebaseProducts first so admin uploads show at the top
-        // Deduplicate by product_id, keeping first occurrence
-        const combined = [...firebaseProducts, ...staticProducts];
-        const seen = new Set();
-        const deduplicated = combined.filter(p => {
-          if (seen.has(p.product_id)) return false;
-          seen.add(p.product_id);
-          return true;
-        });
-        setAllProducts(deduplicated);
-        
-      } catch (error) {
-        console.error("Error fetching products from Firebase:", error);
-      }
-    };
-
-    fetchProducts();
   }, []);
 
   // Fetch Coupons
@@ -232,22 +198,22 @@ const Home = () => {
     return `${d}d ${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
   };
 
-  // --- DATA FILTERING (Updated to use allProducts state) ---
+  // --- DATA FILTERING ---
   const filteredProducts = selectedCategory === "All"
-      ? allProducts.slice(0, 8) // Using allProducts state
-      : allProducts.filter((p) => 
+      ? products.slice(0,8)
+      : products.filter((p) => 
           p.product_department === selectedCategory || 
           p.product_category === selectedCategory
         ).slice(0, 8);
 
-  const trendingProducts = allProducts.slice(8, 16); // Using allProducts state
+  const trendingProducts = products.slice(8, 16);
 
   // Handlers
   const handleAddToCart = (product) => {
     dispatch(addItem({
         product_id: product.product_id,
         product_name: product.product_name,
-        selling_unit_price: Number(product.selling_unit_price), // Ensure number
+        selling_unit_price: product.selling_unit_price,
         image_url: product.image_url || "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1999&auto=format&fit=crop",
         quantity: 1,
     }));
@@ -259,7 +225,7 @@ const Home = () => {
     dispatch(addItem({
         product_id: product.product_id,
         product_name: product.product_name,
-        selling_unit_price: Number(product.selling_unit_price), // Ensure number
+        selling_unit_price: product.selling_unit_price,
         image_url: product.image_url || "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=1999&auto=format&fit=crop",
         quantity: 1,
     }));
@@ -284,50 +250,26 @@ const Home = () => {
       <Toaster position="top-center" />
 
       {/* --- HERO SECTION --- */}
-{/* --- HERO SECTION (FIXED) --- */}
-<section className="relative min-h-[550px] md:min-h-[90vh] flex items-center justify-center text-center px-4 pb-32">
-  
-  {/* Background */}
-  <div 
-    className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat md:bg-fixed"
-    style={{ backgroundImage: 'url("https://wallpapercave.com/wp/wp8036239.jpg")' }}
-  ></div>
-
-  {/* Overlay */}
-  <div className="absolute inset-0 z-10 bg-gradient-to-t from-slate-900 via-slate-900/80 to-slate-900/40"></div>
-
-  {/* Content */}
-  <div className="relative z-20 max-w-4xl animate-fade-in-up px-2 sm:px-4">
-    
-    <span className="inline-block py-1 px-4 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-xs sm:text-sm font-bold tracking-wider uppercase mb-6 backdrop-blur-md">
-      New Season Arrival
-    </span>
-
-    <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold leading-tight mb-6">
-      Redefine your <br />
-      <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-200 to-blue-500">
-        digital style.
-      </span>
-    </h1>
-
-    <p className="text-sm sm:text-lg md:text-xl text-slate-300 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
-      Premium dark aesthetics for the modern minimalist. Curated fashion for those who dare to stand out.
-    </p>
-
-    {/* CTA */}
-    <div className="flex justify-center">
-      <button
-        onClick={() => document.getElementById('shop').scrollIntoView({ behavior: 'smooth' })}
-        className="group inline-flex items-center gap-3 px-8 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-semibold transition-all duration-300 shadow-[0_0_20px_rgba(37,99,235,0.5)] hover:shadow-[0_0_30px_rgba(37,99,235,0.7)]"
-      >
-        Explore Collection
-        <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
-      </button>
-    </div>
-
-  </div>
-</section>
-
+      <section className="relative min-h-[500px] md:h-[90vh] flex items-center justify-center text-center px-4">
+        <div className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat md:bg-fixed" style={{ backgroundImage: 'url("https://wallpapercave.com/wp/wp8036239.jpg")' }}></div>
+        <div className="absolute inset-0 z-10 bg-gradient-to-t from-slate-900 via-slate-900/80 to-slate-900/40"></div>
+        
+        <div className="relative z-20 max-w-4xl animate-fade-in-up px-2 sm:px-4">
+          <span className="inline-block py-1 px-3 sm:px-4 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-400 text-[10px] sm:text-xs md:text-sm font-bold tracking-wider uppercase mb-4 sm:mb-6 backdrop-blur-md">New Season Arrival</span>
+          <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-extrabold leading-tight mb-4 sm:mb-6">
+            Redefine your <br /> 
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-white via-blue-200 to-blue-500">digital style.</span>
+          </h1>
+          <p className="text-sm sm:text-lg md:text-xl text-slate-300 mb-6 sm:mb-8 max-w-xl sm:max-w-2xl mx-auto font-light leading-relaxed px-4">
+            Premium dark aesthetics for the modern minimalist. Curated fashion for those who dare to stand out.
+          </p>
+          <div className="flex justify-center">
+            <button onClick={() => document.getElementById('shop').scrollIntoView({ behavior: 'smooth' })} className="group relative inline-flex items-center justify-center gap-2 sm:gap-3 px-6 sm:px-8 py-2.5 sm:py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-full font-semibold transition-all duration-300 shadow-[0_0_20px_rgba(37,99,235,0.5)] hover:shadow-[0_0_30px_rgba(37,99,235,0.7)] text-sm sm:text-base">
+              Explore Collection <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
+        </div>
+      </section>
 
       {/* --- FLOATING TRUST BAR --- */}
       <section className="relative z-30 px-4 -mt-12 sm:-mt-16 md:-mt-24 mb-12 sm:mb-16 md:mb-24">
@@ -392,9 +334,9 @@ const Home = () => {
         </h3>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
-          {filteredProducts.map((p, idx) => (
+          {filteredProducts.map((p) => (
             <ProductCard 
-              key={`${p.product_id}-${idx}`}
+              key={p.product_id} 
               product={p} 
               isAdmin={isAdmin} 
               onAddToCart={handleAddToCart} 
@@ -447,7 +389,7 @@ const Home = () => {
          </div>
          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
             {trendingProducts.map((p) => (
-               <ProductCard key={`${p.product_id}-trending`} product={p} isAdmin={isAdmin} onAddToCart={handleAddToCart} onBuyNow={handleBuyNow} />
+               <ProductCard key={p.product_id} product={p} isAdmin={isAdmin} onAddToCart={handleAddToCart} onBuyNow={handleBuyNow} />
             ))}
          </div>
       </section>
@@ -520,16 +462,9 @@ const Home = () => {
                 className="w-16 h-16 object-cover rounded-lg shadow-sm" 
               />
               <div className="flex flex-col justify-center">
-               <p className="text-[10px] uppercase tracking-wide text-blue-400 font-semibold">
-  {popupProduct.product_brand || popupProduct.brand || "Generic"}
-</p>
-
-<h4 className="font-semibold text-sm text-white line-clamp-1">
-  {popupProduct.product_name}
-</h4>
-
+                <h4 className="font-semibold text-sm text-white line-clamp-1 pr-2">{popupProduct.product_name}</h4>
                 <p className="text-slate-400 text-xs mb-1">{popupProduct.product_department}</p>
-                <span className="text-blue-400 font-bold">₹{Number(popupProduct.selling_unit_price).toFixed(2)}</span>
+                <span className="text-blue-400 font-bold">₹{popupProduct.selling_unit_price.toFixed(2)}</span>
               </div>
             </div>
 

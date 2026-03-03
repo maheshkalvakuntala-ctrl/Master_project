@@ -9,7 +9,7 @@ import { auth, db } from '../../firebase';
 import { clearCart, setCart } from "../../slices/cartSlice"; 
 import toast, { Toaster } from 'react-hot-toast';
 import { motion, AnimatePresence } from "framer-motion";
-
+import FinancialInsights from "../FinancialInsights.jsx";
 // Icons
 import { 
   FaUser, FaSearch, FaShoppingCart, FaHome, FaThLarge, FaUserCircle, FaSignOutAlt, FaBell, FaPhone
@@ -262,6 +262,7 @@ const Navbar = () => {
                 <Link to="/" className={`transition-colors ${isActive('/') ? 'text-blue-500 font-bold' : 'text-slate-400 hover:text-white'}`}>Home</Link>
                 <Link to="/about" className={`transition-colors ${isActive('/about') ? 'text-blue-500 font-bold' : 'text-slate-400 hover:text-white'}`}>About</Link>
                 <Link to="/contact" className={`transition-colors ${isActive('/contact') ? 'text-blue-500 font-bold' : 'text-slate-400 hover:text-white'}`}>Contact</Link>
+                <Link to="/financial-insights" className={`transition-colors ${isActive('/financial-insights') ? 'text-blue-500 font-bold' : 'text-slate-400 hover:text-white'}`}>Financial Insights</Link>
             </div>
 
             {/* 4. ACTIONS (Mobile & Desktop) */}

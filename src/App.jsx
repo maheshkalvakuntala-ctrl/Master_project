@@ -13,6 +13,7 @@ import MLPredict from "./pages/MLPredict";
 import ReturnPredictor from "./pages/ReturnPredictor";
 // predictor page removed; logic now handled inside AdminOrders
 
+
 // Lazy Imports
 const Home = lazy(() => import("./pages/Home"));
 const About = lazy(() => import("./pages/About"));
@@ -27,10 +28,15 @@ const Shipping = lazy(() => import("./pages/Shipping"));
 const Payment = lazy(() => import("./pages/Payment"));
 const OrderSuccess = lazy(() => import("./pages/OrderSuccess")); 
 import CancelPredictor from "./pages/CancelPredictor";
+import ProductDetails from "./pages/ProductDetails";
+import FinancialInsights from "./components/FinancialInsights";
+import CustomerSegmentation from "./components/CustomerSegmentation";
+
 
 // Dashboards
 const AdminDashboard = lazy(() => import("./dashboards/AdminDashboard"));
 const UserDashboard = lazy(() => import("./dashboards/UserDashboard"));
+
 // --- NEW IMPORT ---
 const SuperAdminDashboard = lazy(() => import("./dashboards/SuperAdminDashboard")); 
 
@@ -92,6 +98,9 @@ function App() {
           <Route path="/shipping" element={<Shipping />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/order-success" element={<OrderSuccess />} />
+          <Route path="/financial-insights" element={<FinancialInsights />} />
+          <Route path="/customer-segmentation" element={<CustomerSegmentation />} />
+          <Route path="/product/:id" element={<ProductDetails />} /> 
 
           {/* --- Dashboard Routes --- */}
           <Route path="/admindashboard" element={<AdminDashboard />} />
