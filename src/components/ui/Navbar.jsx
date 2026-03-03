@@ -262,7 +262,18 @@ const Navbar = () => {
                 <Link to="/" className={`transition-colors ${isActive('/') ? 'text-blue-500 font-bold' : 'text-slate-400 hover:text-white'}`}>Home</Link>
                 <Link to="/about" className={`transition-colors ${isActive('/about') ? 'text-blue-500 font-bold' : 'text-slate-400 hover:text-white'}`}>About</Link>
                 <Link to="/contact" className={`transition-colors ${isActive('/contact') ? 'text-blue-500 font-bold' : 'text-slate-400 hover:text-white'}`}>Contact</Link>
-                <Link to="/financial-insights" className={`transition-colors ${isActive('/financial-insights') ? 'text-blue-500 font-bold' : 'text-slate-400 hover:text-white'}`}>Financial Insights</Link>
+                {isAuth && (
+  <Link 
+    to="/financial-insights" 
+    className={`transition-colors ${
+      isActive('/financial-insights') 
+        ? 'text-blue-500 font-bold' 
+        : 'text-slate-400 hover:text-white'
+    }`}
+  >
+    Financial Insights
+  </Link>
+)}
             </div>
 
             {/* 4. ACTIONS (Mobile & Desktop) */}
