@@ -10,6 +10,7 @@ import {
   AlertTriangle, User, Camera, Brain, Zap, ChevronRight
 } from 'lucide-react';
 import { auth, db } from "../firebase";
+import { useLocation } from "react-router-dom";
 import { doc, getDoc, updateDoc, collection, getDocs, addDoc, serverTimestamp, deleteDoc } from "firebase/firestore";
 import { predictOrderRisk, fetchOrdersWithRisk, fetchAllOrdersWithRisk, formatProb, riskColor } from "../utils/mlPrediction";
 
@@ -162,7 +163,19 @@ const RiskAnalysisTable = ({ title, subtitle, orders, filterHighRisk, isListLoad
 };
 
 const AdminDashboard = () => {
-  const [activeSection, setActiveSection] = useState('dashboard');
+  const location = useLocation();
+  const [activeSection, setActiveSection] = useState(location.search ? new URLSearchParams(location.search).get('section') || 'dashboard' : 'dashboard');
+
+  useEffect(() => {
+    // if navigation came with a query param to open a specific section, honour it
+    if (location.search) {
+      const params = new URLSearchParams(location.search);
+      const sec = params.get('section');
+      if (sec) {
+        setActiveSection(sec);
+      }
+    }
+  }, [location.search]);
   const [showProfileModal, setShowProfileModal] = useState(false);
 
   // Filters

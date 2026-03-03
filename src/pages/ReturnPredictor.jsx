@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   customers, orders, orderItems, products, shippments 
 } from '../data/dataUtils.js';
@@ -25,12 +26,14 @@ const ReturnPredictor = () => {
     product_category: "Electronics"
   });
 
+  const navigate = useNavigate();
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // Auto-fill logic (same functionality, improved UI response)
+  // Auto-fill logic based on Customer ID
   useEffect(() => {
     if (!formData.customer_id) return;
+    
     const cid = parseInt(formData.customer_id);
     const user = customers.find(c => c.customer_id === cid);
 
@@ -109,18 +112,26 @@ const ReturnPredictor = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-cyan-50 py-10 px-4 font-sans text-slate-800">
-      
+      {/* back button */}
+      <div className="max-w-6xl mx-auto mb-6">
+        <button
+          onClick={() => navigate('/admindashboard?section=orders')}
+          className="text-blue-600 hover:underline text-sm"
+        >
+          &larr; Back to orders
+        </button>
+      </div>
       {/* Page Header */}
       <div className="max-w-6xl mx-auto text-center mb-12">
         <h1 className="text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 mb-2">
           SmartReturn AI
         </h1>
-        <p className="text-slate-500 font-medium italic">Predicting retail returns with high-fidelity machine learning</p>
+        <p className="text-slate-500 font-medium italic">High-fidelity predictive analytics for retail logistics</p>
       </div>
 
       <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8">
         
-        {/* Left Column: Input Form (Glastemplate) */}
+        {/* Left Column: Input Form */}
         <div className="lg:col-span-8 bg-white/60 backdrop-blur-lg border border-white/40 shadow-xl rounded-3xl p-8 transition-all hover:shadow-2xl">
           <div className="flex items-center gap-3 mb-6">
             <div className="h-10 w-1 bg-blue-500 rounded-full"></div>
@@ -178,7 +189,7 @@ const ReturnPredictor = () => {
               type="submit" 
               disabled={loading}
               className={`w-full py-4 rounded-2xl font-black text-white uppercase tracking-widest shadow-lg transition-all transform active:scale-[0.98] ${
-                loading ? 'bg-slate-400' : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:shadow-blue-200 hover:translate-y-[-2px]'
+                loading ? 'bg-slate-400 animate-pulse' : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:shadow-blue-200 hover:translate-y-[-2px]'
               }`}
             >
               {loading ? "Computing Gradients..." : "Generate Prediction"}
@@ -186,13 +197,12 @@ const ReturnPredictor = () => {
           </form>
         </div>
 
-        {/* Right Column: Results & Analytics */}
-        <div className="lg:col-span-4 space-y-6">
+        {/* Right Column: Results & Disclaimer */}
+        <div className="lg:col-span-4 space-y-6 flex flex-col">
           {result ? (
             <div className={`relative overflow-hidden p-8 rounded-3xl border border-white/50 shadow-2xl transition-all duration-500 animate-in fade-in slide-in-from-bottom-4 ${
               result.prediction === 1 ? 'bg-orange-50/80 backdrop-blur-md' : 'bg-emerald-50/80 backdrop-blur-md'
             }`}>
-              {/* Decorative Accent */}
               <div className={`absolute top-0 right-0 p-4 font-black opacity-10 text-6xl select-none ${
                 result.prediction === 1 ? 'text-orange-600' : 'text-emerald-600'
               }`}>
@@ -222,19 +232,29 @@ const ReturnPredictor = () => {
 
                 <div className="p-4 bg-white/40 rounded-2xl border border-white text-xs leading-relaxed text-slate-600">
                   <span className="font-bold text-slate-800 block mb-1">Observation:</span>
-                  This prediction is based on the customer's average order value of <b>${formData.customer_avg_order_value}</b> 
-                  and a historical return rate of <b>{formData.customer_return_rate * 100}%</b>.
+                  Prediction synthesized from customer historical return rate of <b>{formData.customer_return_rate * 100}%</b> and current transaction metrics.
                 </div>
               </div>
             </div>
           ) : (
-            <div className="h-full bg-white/40 backdrop-blur-sm border-2 border-dashed border-slate-200 rounded-3xl p-12 flex flex-col items-center justify-center text-center">
-              <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mb-4">
-                <svg className="w-8 h-8 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
-              </div>
-              <p className="text-slate-400 font-medium">Waiting for Input Data...</p>
+            <div className="h-64 bg-white/40 backdrop-blur-sm border-2 border-dashed border-slate-200 rounded-3xl p-8 flex flex-col items-center justify-center text-center">
+              <div className="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mb-4 text-slate-300 italic font-serif">i</div>
+              <p className="text-slate-400 font-medium">Ready for input data...</p>
             </div>
           )}
+
+          {/* AI Disclaimer Section */}
+          <div className="bg-slate-800/5 backdrop-blur-sm border border-slate-200 rounded-3xl p-6">
+            <div className="flex items-center gap-2 mb-3 text-slate-600">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span className="text-xs font-bold uppercase tracking-wider">AI Disclaimer</span>
+            </div>
+            <p className="text-[11px] leading-relaxed text-slate-500">
+              Predictions generated by <b>SmartReturn AI</b> are based on historical data patterns and statistical probabilities. They do not guarantee future outcomes. This tool should be used as a <b>decision-support aid</b> and not as the sole basis for restrictive customer actions. Data processed here is for demonstration purposes and may vary based on real-time market shifts.
+            </p>
+          </div>
         </div>
       </div>
     </div>
